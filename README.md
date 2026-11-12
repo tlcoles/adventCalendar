@@ -4,7 +4,28 @@ This is the 2026 working edition of an online Advent Calendar originally created
 
 This repository is a fork of [HenniePenny/adventCalendar2025](https://github.com/HenniePenny/adventCalendar2025). It preserves the original project's history and credits while allowing the 2026 edition to be developed independently.
 
-**Status:** Work in progress. The 2025 documentation below is retained as a reference. Planned for 2026: updated images and optional audio surprises that play inside the opened door, without autoplay.
+**Status:** Work in progress. Audio-player support has been added to the 2026 working branch; new 2026 artwork and recordings have not yet been added. The 2025 documentation below remains as a reference.
+
+## Audio surprises (2026)
+
+A door can now contain a local audio recording. The player appears inside the existing surprise popup, uses the browser's native controls (including on phones), and **never autoplays**. Visitors press Play themselves; they can pause and seek using the controls. Playback stops and resets when the popup closes or another surprise is shown. Audio surprises do not trigger the optional Santa laugh.
+
+Add a recording under `assets/surprises/` and replace the chosen day's entry in the `surprises` array in `script.js` with, for example:
+
+```js
+{
+  type: "audio",
+  src: "assets/surprises/christmas-message.mp3",
+  title: "A little Christmas message",
+  description: "Press Play to listen."
+}
+```
+
+Use MP3 for broad compatibility with modern mobile and desktop browsers. A title and description are optional, but a valid local `src` is required. Recordings are **not bundled yet**, so this is an example rather than an existing file. Images can continue to be PNG, WebP, or other browser-supported formats.
+
+**Testing:** Temporarily set `FORCE_TESTING_MODE = true` on a test branch or local preview, add a real MP3 and a sample audio entry, and confirm on Safari/iOS, Chrome/Android, and desktop. Turn testing mode off before deploying. Check Play, Pause, seeking, closing the popup, switching doors, and reopening the same door.
+
+---
 
 ---
 

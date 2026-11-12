@@ -86,7 +86,17 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("keydown", onEsc);
   }
 
+  // Stop a recording before the popup is cleared or another surprise is shown.
+  function stopModalAudio() {
+    const audio = modalBody.querySelector("audio");
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+  }
+
   function closeModal() {
+    stopModalAudio();
     modal.setAttribute("aria-hidden", "true");
     modalBody.innerHTML = "";
     modal.classList.remove("modal--media");
@@ -104,6 +114,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function renderSurprise(s) {
+    stopModalAudio();
+    modal.classList.remove("modal--media");
     modalBody.innerHTML = "";
     if (!s || !s.type) {
       modalBody.textContent = "Nothing here yet. Come back later!";
@@ -133,6 +145,48 @@ document.addEventListener("DOMContentLoaded", () => {
         wrap.appendChild(p);
         modalBody.appendChild(wrap);
         break;
+
+      case "audio": {
+        // Browser-native controls handle touch, seeking, and accessibility.
+        // Playback never starts until the visitor presses Play.
+        if (!s.src) {
+          modalBody.textContent = "Audio unavailable.";
+          break;
+        }
+        if (hohoho && !hohoho.paused) {
+          hohoho.pause();
+          hohoho.currentTime = 0;
+        }
+        const audioWrap = document.createElement("div");
+        audioWrap.className = "modal-audio";
+        if (s.title) {
+          const audioTitle = document.createElement("h3");
+          audioTitle.textContent = s.title;
+          audioWrap.appendChild(audioTitle);
+        }
+        if (s.description) {
+          const description = document.createElement("p");
+          description.textContent = s.description;
+          audioWrap.appendChild(description);
+        }
+        const player = document.createElement("audio");
+        player.controls = true;
+        player.preload = "metadata";
+        player.src = s.src;
+        player.setAttribute("aria-label", s.title || "Audio surprise");
+        player.addEventListener("error", () => {
+          // Avoid inserting duplicate warnings if the browser reports more than once.
+          if (!audioWrap.querySelector(".audio-error")) {
+            const warning = document.createElement("p");
+            warning.className = "audio-error";
+            warning.textContent = "This recording could not be loaded.";
+            audioWrap.appendChild(warning);
+          }
+        });
+        audioWrap.appendChild(player);
+        modalBody.appendChild(audioWrap);
+        break;
+      }
 
       case "youtube":
         modal.classList.add("modal--media");
@@ -178,6 +232,11 @@ document.addEventListener("DOMContentLoaded", () => {
       doorEl.innerHTML = `<div class="door-text" style="padding:.25rem .5rem;font-size:.9rem;line-height:1.3">${s.title || s.body || "Text"}</div>`;
     } else if (s.type === "youtube") {
       doorEl.innerHTML = `<div class="door-video" style="font-size:.9rem">▶ ${s.title || "Watch video"}</div>`;
+    } else if (s.type === "audio") {
+      const preview = document.createElement("div");
+      preview.className = "door-audio";
+      preview.textContent = "♫ " + (s.title || "Listen to audio");
+      doorEl.replaceChildren(preview);
     }
   }
 
@@ -330,7 +389,7 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem(openedDoorsKey, JSON.stringify(openedDoorsScoped));
         door.dataset.opened = "true";
 
-        if (surprise.type !== "youtube" && isSoundOn && hohoho) {
+        if (surprise.type !== "youtube" && surprise.type !== "audio" && isSoundOn && hohoho) {
           hohoho.currentTime = 0;
           hohoho.play().catch((err) => console.log("Audio playback failed:", err));
         }

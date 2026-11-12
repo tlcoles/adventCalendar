@@ -1,3 +1,13 @@
+# Advent Calendar 2026
+
+This is the 2026 working edition of an online Advent Calendar originally created collaboratively by **[HenniePenny](https://github.com/HenniePenny)** and **[Tammi Coles (@tlcoles)](https://github.com/tlcoles)**.
+
+This repository is a fork of [HenniePenny/adventCalendar2025](https://github.com/HenniePenny/adventCalendar2025). It preserves the original project's history and credits while allowing the 2026 edition to be developed independently.
+
+**Status:** Work in progress. The 2025 documentation below is retained as a reference. Planned for 2026: updated images and optional audio surprises that play inside the opened door, without autoplay.
+
+---
+
 # 🎄 Advent Calendar 2025
 
 > _A cozy, customizable digital advent calendar — perfect for any December, every year._

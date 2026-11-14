@@ -1,16 +1,26 @@
-# Advent Calendar 2026
+# Advent calendar 2026
 
-This is the 2026 working edition of an online Advent Calendar originally created collaboratively by **[HenniePenny](https://github.com/HenniePenny)** and **[Tammi Coles (@tlcoles)](https://github.com/tlcoles)**.
+This is the 2026 edition of an online Advent calendar originally created collaboratively by **[HenniePenny](https://github.com/HenniePenny)** and **[Tammi Coles (@tlcoles)](https://github.com/tlcoles)**.
 
-This repository is a fork of [HenniePenny/adventCalendar2025](https://github.com/HenniePenny/adventCalendar2025). It preserves the original project's history and credits while allowing the 2026 edition to be developed independently.
+This repository is a fork of [HenniePenny/adventCalendar2025](https://github.com/HenniePenny/adventCalendar2025). It preserves the original project's history and credits while allowing the 2026 edition to be developed independently. The 2026 stories, recordings, and changes are by Tammi L. Coles; the 2025 calendar they build on is the joint work of both creators.
 
-**Status:** The 2026 content is in. All 24 doors now hold a Happy Berlin Bear story: an illustration plus a read-aloud recording by Tammi L. Coles. The 2025 images and videos remain in `assets/surprises/` and in the git history. The 2025 documentation below remains as a reference.
+The 2026 edition runs at [tlcoles.com](https://www.tlcoles.com/). The 2025 documentation further down remains as a reference.
 
-## Audio surprises (2026)
+## What is new in 2026
 
-A door can contain a local audio recording, optionally with an illustration shown above the player and on the opened door (with a small ♫ badge). The player appears inside the existing surprise popup, uses the browser's native controls (including on phones), and **never autoplays**. Visitors press Play themselves; they can pause and seek using the controls. Playback stops and resets when the popup closes or another surprise is shown. If the visitor has enabled the optional Santa laugh, it plays once when a door is first opened and stops as soon as the story starts.
+- **Happy Berlin Bear stories.** All 24 doors hold a read-aloud story: an illustration plus a recording by Tammi L. Coles. The 2025 images and videos remain in `assets/surprises/` and in the git history.
+- **Audio doors.** A new `audio` surprise type with an optional illustration (details below).
+- **Santa laugh kept.** The optional "Ho Ho Ho" sound still plays once when a door is first opened, and stops as soon as the visitor starts the story.
+- **"Our Happy Berlin Bear & his friends."** An optional section below the calendar introduces the recurring characters with a group picture and one line each.
+- **Link preview.** Open Graph tags show the cast picture when the calendar link is shared in WhatsApp, Signal, or social media.
+- **Credits.** The footer separates the 2026 edition from the original 2025 calendar.
+- **Version tags.** `index.html` loads `styles.css` and `script.js` with a `?v=` tag, so returning visitors get the current files and not cached copies.
 
-Add a recording (and optional image) under `assets/` and replace the chosen day's entry in the `surprises` array in `script.js` with, for example:
+## Audio surprises
+
+A door can contain a local audio recording, optionally with an illustration shown above the player and on the opened door (with a small ♫ badge). The player appears inside the existing surprise popup, uses the browser's native controls (including on phones), and **never autoplays**. Visitors press Play themselves; they can pause and seek using the controls. Playback stops and resets when the popup closes or another surprise is shown. In the popup, the illustration is capped in height so the player always stays visible, even on short laptop screens.
+
+To add one, put the files under `assets/` and replace the chosen day's entry in the `surprises` array in `script.js`, for example:
 
 ```js
 {
@@ -22,13 +32,62 @@ Add a recording (and optional image) under `assets/` and replace the chosen day'
 }
 ```
 
-Use MP3 for broad compatibility with modern mobile and desktop browsers. `title`, `description`, `image`, and `alt` are optional, but a valid `src` is required. Always give an `alt` text when you add an `image`.
+Use MP3 for broad compatibility with mobile and desktop browsers. `title`, `description`, `image`, and `alt` are optional, but a valid `src` is required. Always give an `alt` text when you add an `image`.
 
-**2026 assets** live in `assets/2026/audio/` and `assets/2026/images/`. The recordings were leveled to the same loudness (about −21 LUFS, peaks below −1 dBFS) and saved as 64 kbps mono MP3 (about 1 MB per story). The illustrations are 900 × 900 px WebP (about 110 KB each).
+### The Santa laugh
 
-**Testing:** Temporarily set `FORCE_TESTING_MODE = true` on a test branch or local preview, add a real MP3 and a sample audio entry, and confirm on Safari/iOS, Chrome/Android, and desktop. Turn testing mode off before deploying. Check Play, Pause, seeking, closing the popup, switching doors, and reopening the same door.
+If the visitor ticks "Enable Ho Ho Ho Sound," `assets/hohoho.mp3` plays once when a door is opened for the first time. Pressing Play on the story stops the laugh, so the two never overlap. Reopening a door does not laugh again. The laugh is never played for YouTube doors.
 
----
+## Cast section
+
+The section sits between the controls and the footer in `index.html`. It is a native `<details>` element, so it opens and closes without extra code and works with the keyboard and screen readers.
+
+- Closed by default, shown as a small button styled like the sound toggle.
+- Opens to a card with the group picture (`assets/2026/images/bear-and-friends.webp`) and a caption per character.
+- `script.js` remembers whether the visitor left it open or closed (see storage keys below).
+- Captions and alt text are edited directly in `index.html`; styles are in the "Our Happy Berlin Bear & his friends" block at the end of `styles.css`.
+
+## Link preview
+
+The `<head>` of `index.html` holds Open Graph and Twitter card tags. The preview image is `assets/2026/images/bear-and-friends-share.jpg` (1200 × 800 px JPEG, kept under 300 KB for WhatsApp). The `og:image` URL must be absolute, so update it if the calendar moves to another domain. Messaging apps cache previews, so links shared before a change may keep the old preview for a while.
+
+## Assets
+
+2026 files live in `assets/2026/audio/` and `assets/2026/images/`, named `day-NN-short-title`.
+
+- **Recordings:** leveled to the same loudness (about −21 LUFS, peaks below −1 dBFS) and saved as 64 kbps mono MP3, about 1 MB per story. Day 15 also has gentle compression to even out quiet and loud passages.
+- **Illustrations:** 900 × 900 px WebP, about 110 KB each.
+- **Cast picture:** 1200 × 800 px WebP for the page, plus the JPEG for link previews.
+
+## Storage keys
+
+The calendar keeps its state in the visitor's browser (`localStorage`), on that device only:
+
+| Key | Purpose |
+| --- | --- |
+| `openedDoors-YYYY-12` | Doors opened this December (a new key each year, so every year starts with closed doors) |
+| `doorOrder` | The visitor's shuffled door order |
+| `soundEnabled` | Whether the Santa laugh is switched on |
+| `castOpen` | Whether the cast section was left open |
+
+The Reset button clears the opened doors and the door order.
+
+## Deploying
+
+The calendar is a static site: upload `index.html`, `styles.css`, `script.js`, `snowEffect.js`, and the `assets/` folder to the web root. Before deploying:
+
+1. Make sure `FORCE_TESTING_MODE` is `false` in `script.js`.
+2. After changing `styles.css` or `script.js`, bump the matching `?v=` tag in `index.html` (for example `?v=2026c` to `?v=2026d`).
+3. After uploading, do a hard refresh (Cmd+Shift+R or Ctrl+Shift+R) to see the changes.
+
+## Testing
+
+Doors stay locked until their December date, so the live calendar cannot be tested in November. Two options:
+
+- **Locally or on a test branch:** set `FORCE_TESTING_MODE = true` to unlock all doors. Turn it off before deploying.
+- **On the live server:** upload a temporary copy, such as `preview.html` with its own `preview-script.js` where testing mode is on. Give the copy its own storage keys (for example a `preview:` prefix on every `localStorage` key), or doors opened during testing will show as already opened on the real calendar on that device. Add `<meta name="robots" content="noindex, nofollow">` and delete both files after testing.
+
+Check on Safari for iPhone, Chrome for Android, and a desktop browser: Play, Pause, seeking, closing the popup, switching doors, reopening the same door, the Santa laugh with the sound on, and the cast toggle.
 
 ---
 

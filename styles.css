@@ -646,25 +646,80 @@ h2.sr-only {
   outline: none;
 }
 /* =========================================================
-   MEET THE FRIENDS (2026 cast section, below the calendar)
+   OUR HAPPY BERLIN BEAR & HIS FRIENDS (2026 cast section)
+   A <details> toggle below the calendar: closed by default,
+   shown as a small button like the sound toggle.
    ========================================================= */
 .cast {
-  max-width: 50rem;
-  margin: 2rem auto 1.5rem;
-  padding: clamp(1rem, 3vw, 1.75rem);
+  width: fit-content;
+  max-width: calc(100% - 2rem);
+  margin: 1.5rem auto;
   box-sizing: border-box;
+  color: #333;
+}
+
+.cast-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  list-style: none;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.cast-toggle::-webkit-details-marker { display: none; }
+
+.cast-toggle::before { content: "🐻"; }
+
+.cast-toggle::after {
+  content: "▾";
+  font-size: 0.9rem;
+  color: #2e8b57;
+  transition: transform 0.2s ease;
+}
+
+.cast-toggle:focus-visible {
+  outline: 3px solid #2e8b57;
+  outline-offset: 2px;
+}
+
+.cast-toggle h2 {
+  display: inline;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: normal;
+  color: #c0392b;
+}
+
+/* Open: the full card */
+.cast[open] {
   width: calc(100% - 2rem);
+  max-width: 50rem;
+  padding: clamp(1rem, 3vw, 1.75rem);
   background: rgba(255, 255, 255, 0.92);
   border: 0.25rem solid #2e8b57;
   border-radius: 0.75rem;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
-  color: #333;
 }
 
-.cast h2 {
-  margin: 0 0 1rem;
-  font-size: clamp(1.5rem, 5vw, 2.1rem);
-  color: #c0392b;
+.cast[open] .cast-toggle {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin-bottom: 1rem;
+  background: none;
+  box-shadow: none;
+}
+
+.cast[open] .cast-toggle::before { content: none; }
+
+.cast[open] .cast-toggle::after { transform: rotate(180deg); }
+
+.cast[open] .cast-toggle h2 {
+  font-size: clamp(1.4rem, 5vw, 2rem);
 }
 
 .cast img {

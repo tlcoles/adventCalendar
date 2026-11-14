@@ -16,10 +16,10 @@
     <meta property="og:image:alt" content="Happy Berlin Bear and friends in a snowy Berlin courtyard">
     <meta name="twitter:card" content="summary_large_image">
     <!-- Link to the external CSS file with "Henny Penny" Google Font -->
-    <link rel="stylesheet" href="styles.css?v=2026">
+    <link rel="stylesheet" href="styles.css?v=2026b">
 
     <!-- Link to the external JavaScript files -->
-    <script src="script.js?v=2026b" defer></script>
+    <script src="script.js?v=2026c" defer></script>
     <script src="snowEffect.js?v=2026" defer></script>
 </head>
 
@@ -39,19 +39,21 @@
       <div id="soundToggleContainer"></div>
     </div>
 
-    <!-- Our Happy Berlin Bear & his friends (2026 cast) -->
-    <section class="cast" aria-labelledby="castTitle">
-      <h2 id="castTitle">Our Happy Berlin Bear &amp; his friends</h2>
-      <img src="assets/2026/images/bear-and-friends.webp" width="1200" height="800" loading="lazy"
-        alt="Lotte with a red ribbon, Happy Berlin Bear with a plate of star cookies, Fritz the fox taking a cookie, Frau Krause singing into a broom, and Emil with his ice skates, gathered in a snowy courtyard under string lights and a Christmas tree">
-      <ul class="cast-list">
-        <li><strong>Lotte</strong> The girl next door. First to help, first at the door, and keeper of the cookie list.</li>
-        <li><strong>Bear</strong> Our Happy Berlin Bear. Big, warm, and a little too fond of eating.</li>
-        <li><strong>Fritz</strong> A small fox with a red nose and sticky paws.</li>
-        <li><strong>Frau Krause</strong> The elderly neighbor downstairs. Handy with fairy lights and a microphone.</li>
-        <li><strong>Emil</strong> Bear's young and talented friend. He can teach you how to skate with confidence!</li>
-      </ul>
-    </section>
+    <!-- Our Happy Berlin Bear & his friends (2026 cast), hidden until the visitor opens it -->
+    <details class="cast" id="castSection">
+      <summary class="cast-toggle"><h2 id="castTitle">Our Happy Berlin Bear &amp; his friends</h2></summary>
+      <div class="cast-body">
+        <img src="assets/2026/images/bear-and-friends.webp" width="1200" height="800" loading="lazy"
+          alt="Lotte with a red ribbon, Happy Berlin Bear with a plate of star cookies, Fritz the fox taking a cookie, Frau Krause singing into a broom, and Emil with his ice skates, gathered in a snowy courtyard under string lights and a Christmas tree">
+        <ul class="cast-list">
+          <li><strong>Lotte</strong> The girl next door. First to help, first at the door, and keeper of the cookie list.</li>
+          <li><strong>Bear</strong> Our Happy Berlin Bear. Big, warm, and a little too fond of eating.</li>
+          <li><strong>Fritz</strong> A small fox with a red nose and sticky paws.</li>
+          <li><strong>Frau Krause</strong> The elderly neighbor downstairs. Handy with fairy lights and a microphone.</li>
+          <li><strong>Emil</strong> Bear's young and talented friend. He can teach you how to skate with confidence!</li>
+        </ul>
+      </div>
+    </details>
 
 
     <!-- Universal modal for images, text, or YouTube -->

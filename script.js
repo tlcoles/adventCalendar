@@ -365,6 +365,15 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("soundEnabled", isSoundOn);
   });
 
+  // ----- Cast section (optional, remembered like the sound toggle) -----
+  const castSection = document.getElementById("castSection");
+  if (castSection) {
+    if (localStorage.getItem("castOpen") === "true") castSection.open = true;
+    castSection.addEventListener("toggle", () => {
+      localStorage.setItem("castOpen", castSection.open);
+    });
+  }
+
   // ----- Door order -----
   let doorOrder = JSON.parse(localStorage.getItem("doorOrder"));
   if (!doorOrder) {

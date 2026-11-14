@@ -82,10 +82,16 @@ The calendar is a static site: upload `index.html`, `styles.css`, `script.js`, `
 
 ## Testing
 
-Doors stay locked until their December date, so the live calendar cannot be tested in November. Two options:
+Doors stay locked until their December date, so the live calendar cannot be tested in November.
 
-- **Locally or on a test branch:** set `FORCE_TESTING_MODE = true` to unlock all doors. Turn it off before deploying.
-- **On the live server:** upload a temporary copy, such as `preview.html` with its own `preview-script.js` where testing mode is on. Give the copy its own storage keys (for example a `preview:` prefix on every `localStorage` key), or doors opened during testing will show as already opened on the real calendar on that device. Add `<meta name="robots" content="noindex, nofollow">` and delete both files after testing.
+- **On your own computer:** set `FORCE_TESTING_MODE = true` to unlock all doors. Turn it off before deploying, because it unlocks the doors for every visitor.
+- **On the live website**, to test on a real phone, make a temporary copy instead:
+  1. Copy `index.html` to `preview.html` and `script.js` to `preview-script.js`.
+  2. In `preview.html`, change `script.js` to `preview-script.js`, and add this line inside `<head>` so search engines skip the page:
+     `<meta name="robots" content="noindex, nofollow">`
+  3. In `preview-script.js`, set `FORCE_TESTING_MODE = true`.
+  4. Upload both files and open `yoursite.com/preview.html` **in a private or incognito window**. The calendar remembers opened doors in the browser, and a private window keeps that memory separate, so doors you open while testing will not show as opened on your real calendar.
+  5. Delete both files when you are done.
 
 Check on Safari for iPhone, Chrome for Android, and a desktop browser: Play, Pause, seeking, closing the popup, switching doors, reopening the same door, the Santa laugh with the sound on, and the cast toggle.
 

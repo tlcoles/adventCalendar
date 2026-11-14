@@ -58,6 +58,7 @@ The `<head>` of `index.html` holds Open Graph and Twitter card tags. The preview
 - **Recordings:** leveled to the same loudness (about −21 LUFS, peaks below −1 dBFS) and saved as 64 kbps mono MP3, about 1 MB per story. Day 15 also has gentle compression to even out quiet and loud passages.
 - **Illustrations:** 900 × 900 px WebP, about 110 KB each.
 - **Cast picture:** 1200 × 800 px WebP for the page, plus the JPEG for link previews.
+- **Favicon:** `assets/favicon/` holds a calendar door with "24" in the page's red and green. `favicon.svg` is used by most browsers, `favicon.ico` (16, 32 and 48 px, with a simplified 16 px version) is the fallback, and `apple-touch-icon.png` (180 px, on the page background color) is used when someone adds the calendar to an iPhone or iPad home screen.
 
 ## Storage keys
 

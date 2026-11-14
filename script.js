@@ -159,6 +159,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         const audioWrap = document.createElement("div");
         audioWrap.className = "modal-audio";
+        // Optional illustration shown above the player.
+        if (s.image) {
+          const art = document.createElement("img");
+          art.src = s.image;
+          art.alt = s.alt || "";
+          art.className = "modal-audio-image";
+          audioWrap.appendChild(art);
+        }
         if (s.title) {
           const audioTitle = document.createElement("h3");
           audioTitle.textContent = s.title;
@@ -233,39 +241,55 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (s.type === "youtube") {
       doorEl.innerHTML = `<div class="door-video" style="font-size:.9rem">▶ ${s.title || "Watch video"}</div>`;
     } else if (s.type === "audio") {
-      const preview = document.createElement("div");
-      preview.className = "door-audio";
-      preview.textContent = "♫ " + (s.title || "Listen to audio");
-      doorEl.replaceChildren(preview);
+      if (s.image) {
+        // Show the illustration on the opened door, with a small note badge.
+        const thumb = document.createElement("img");
+        thumb.src = s.image;
+        thumb.alt = s.alt || "";
+        thumb.loading = "lazy";
+        const badge = document.createElement("span");
+        badge.className = "door-audio-badge";
+        badge.setAttribute("aria-hidden", "true");
+        badge.textContent = "♫";
+        doorEl.classList.add("door--audio");
+        doorEl.replaceChildren(thumb, badge);
+      } else {
+        const preview = document.createElement("div");
+        preview.className = "door-audio";
+        preview.textContent = "♫ " + (s.title || "Listen to audio");
+        doorEl.replaceChildren(preview);
+      }
     }
   }
 
   // ----- Surprises -----
+  // 2026: Happy Berlin Bear stories. Each door shows an illustration and a read-aloud recording.
+  // The 2025 images and videos remain in assets/surprises/ and in the git history.
   const surprises = [
-    { type: "image", src: "assets/surprises/berlin-sugar-love.png", alt: "Festive gingerbread hearts with Berlin Christmas market charm and sweet holiday love" }, // 1
-    { type: "image", src: "assets/surprises/The-Claus-Squad.webp", alt: "A cheerful lineup of foil-wrapped chocolate Santas standing in formation, ready to spread Christmas sweetness." }, // 2
-    { type: "youtube", url: "https://youtu.be/-5iG-Kmt1iY?si=js8pv0D-i2mpzd60", title: "Christmas Comes But Once a Year (1936, Fleischer Studios)" }, // 3 🎥
-    { type: "image", src: "assets/surprises/christmas_cat_santaclaws.webp", alt: "Adorable cat playfully peeking through decorated Christmas tree branches with festive curiosity" }, // 4
-    { type: "image", src: "assets/surprises/ServingFace.webp", alt: "A classic red-and-gold nutcracker standing proudly against a background of twinkling Christmas lights" }, // 5
-    { type: "image", src: "assets/surprises/The-early-bird-gets-Nikolaus.webp", alt: "A shiny red boot filled with chocolates and candy canes — proof that Nikolaus came by!" }, // 6
-    { type: "youtube", url: "https://youtu.be/ve_sWSfX9uw?si=tZdqoWsx00XezlfN", title: "Rudolph the Red-Nosed Reindeer (Classic Cartoon)" }, // 7 🎥
-    { type: "image", src: "assets/surprises/dreams-shine-brighter.png", alt: "Magnificent building facade at night with projected stars making dreams shine brighter during Christmas" }, // 8
-    { type: "image", src: "assets/surprises/elf-esteem.webp", alt: "Festive elf-themed scene with holiday treats boosting Christmas elf-esteem and seasonal joy" }, // 9
-    { type: "youtube", url: "https://youtu.be/yubLpbv0Vs4?si=JK_iwyDFm3opE5hu", title: "Jack Frost (1934, Ub Iwerks)" }, // 10 🎥
-    { type: "image", src: "assets/surprises/soakingUp.webp", alt: "A gingerbread man enjoying a festive foam bath in a mug of hot cocoa" }, // 11
-    { type: "image", src: "assets/surprises/FlourEverywhere.webp", alt: "A joyful Christmas baking mess — flour flying, cookie cutters scattered, and sweet magic in progress" }, // 12
-    { type: "youtube", url: "https://youtu.be/hYKde7ARvnU?si=OIllor6wmYVHnJMl", title: "A Christmas Visit (1959 Animated Short)" }, // 13 🎥
-    { type: "image", src: "assets/surprises/ThreeWiseWoofs.webp", alt: "Three festive dogs resting by a cozy Christmas backdrop, dressed in holiday hats and antlers" }, // 14
-    { type: "youtube", url: "https://youtu.be/rHhTVZEGRaM?si=y1EVVqdZJtZYl-rQ", title: "Snow Foolin’ (1949, Famous Studios)" }, // 15 🎥
-    { type: "image", src: "assets/surprises/next-stop-magic.png", alt: "Festive music scene with Christmas tunes filling the air, next stop is pure holiday magic" }, // 16
-    { type: "image", src: "assets/surprises/santa-wants-extras.webp", alt: "Heartwarming scene of spreading Christmas cheer with Santa wanting extra holiday love and joy" }, // 17
-    { type: "image", src: "assets/surprises/sip-sparkle-repeat.png", alt: "Sweet Christmas treats with sip, sparkle, and repeat vibes for perfect holiday indulgence" }, // 18
-    { type: "youtube", url: "https://youtu.be/wIPcrTnSpSQ?si=3Zr-3anQmMhQw4Dy", title: "The Pups’ Christmas (1936, Happy Harmonies)" }, // 19 🎥
-    { type: "image", src: "assets/surprises/peace-joy-sparkle.png", alt: "Peaceful Christmas message encouraging sending kind notes with sparkling joy and holiday spirit" }, // 20
-    { type: "youtube", url: "https://youtu.be/zLhvCOOxH-Q?si=29fKBEUzsGHjk6bj", title: "Die Geschichte vom wahren Weihnachtsmann | NETTO" }, // 21 🎥
-    { type: "image", src: "assets/surprises/The-calm-before-the-Claus.webp", alt: "Santa Claus carefully ironing his red suit, getting ready for the big night in a cozy Christmas setting" }, // 22
-    { type: "youtube", url: "https://youtu.be/tl57Gy5X_Kg?si=ozd2m4o7Fmv1KIbc", title: "From Our Family To Yours | Disney Christmas Advert (2020)" }, // 23 🎥
-    { type: "image", src: "assets/surprises/Officially-out-of-office.webp", alt: "Santa rocking his sunglasses, soaking up the after-Christmas chill — officially out of office" }, // 24
+    { type: "audio", title: "The ribbon on the tower", image: "assets/2026/images/day-01-tower-tie.webp", alt: "Happy Berlin Bear in a Santa hat tying a big red bow around the base of the Fernsehturm", src: "assets/2026/audio/day-01-tower-tie.mp3" }, // 1
+    { type: "audio", title: "A tree on two wheels", image: "assets/2026/images/day-02-tree-on-bike.webp", alt: "The bear in a yellow beanie riding a red bicycle with a Christmas tree strapped to the back", src: "assets/2026/audio/day-02-tree-on-bike.mp3" }, // 2
+    { type: "audio", title: "The cookie thief", image: "assets/2026/images/day-03-cookie-thief.webp", alt: "The bear in a red knit hat holding a steaming red mug inside a Christmas market stall with a striped roof and a golden star", src: "assets/2026/audio/day-03-cookie-thief.mp3" }, // 3
+    { type: "audio", title: "A star at the gate", image: "assets/2026/images/day-04-brandenburger-tor.webp", alt: "The bear reaching up to hang a golden star on the Brandenburg Gate", src: "assets/2026/audio/day-04-brandenburger-tor.mp3" }, // 4
+    { type: "audio", title: "A small problem with the lights", image: "assets/2026/images/day-05-lights.webp", alt: "The bear dancing happily, tangled up in a string of glowing fairy lights", src: "assets/2026/audio/day-05-lights.mp3" }, // 5
+    { type: "audio", title: "Red boots for Nikolaus Day", image: "assets/2026/images/day-06-red-boots-for-nikolaus.webp", alt: "The bear striding along in shiny red boots past an elevated U-Bahn train", src: "assets/2026/audio/day-06-red-boots-for-nikolaus.mp3" }, // 6
+    { type: "audio", title: "The missing star cookie", image: "assets/2026/images/day-07-the-missing-cookie.webp", alt: "The bear in a Santa hat sneakily reaching for a star cookie on a baking tray", src: "assets/2026/audio/day-07-the-missing-cookie.mp3" }, // 7
+    { type: "audio", title: "A snow bear in the courtyard", image: "assets/2026/images/day-08-a-snow-bear.webp", alt: "The bear in a green beanie building a snow bear with a red scarf", src: "assets/2026/audio/day-08-a-snow-bear.mp3" }, // 8
+    { type: "audio", title: "Ninety-six steps", image: "assets/2026/images/day-09-so-many-stairs.webp", alt: "The bear pulling a wooden sled piled high with wrapped presents", src: "assets/2026/audio/day-09-so-many-stairs.mp3" }, // 9
+    { type: "audio", title: "The pretzel tree", image: "assets/2026/images/day-10-the-pretzel-tree.webp", alt: "The bear hanging pretzels on a small Christmas tree", src: "assets/2026/audio/day-10-the-pretzel-tree.mp3" }, // 10
+    { type: "audio", title: "The skating lesson", image: "assets/2026/images/day-11-the-skating-lesson.webp", alt: "The bear skating on the ice, wobbling with arms flung wide", src: "assets/2026/audio/day-11-the-skating-lesson.mp3" }, // 11
+    { type: "audio", title: "Water for the little tree", image: "assets/2026/images/day-12-the-plumpe.webp", alt: "The bear filling a red watering can at a green Berlin street pump tied with a bow, next to a little potted tree", src: "assets/2026/audio/day-12-the-plumpe.mp3" }, // 12
+    { type: "audio", title: "The chestnut stop", image: "assets/2026/images/day-13-chestnuts.webp", alt: "The bear eating roasted chestnuts from a paper cone", src: "assets/2026/audio/day-13-chestnuts.mp3" }, // 13
+    { type: "audio", title: "The snowball trick", image: "assets/2026/images/day-14-the-snowball-trick.webp", alt: "The bear balancing a snowball on his nose, with the Fernsehturm in the background", src: "assets/2026/audio/day-14-the-snowball-trick.mp3" }, // 14
+    { type: "audio", title: "A döner with a bow", image: "assets/2026/images/day-15-the-doener.webp", alt: "The bear carrying a giant döner tied with a red bow", src: "assets/2026/audio/day-15-the-doener.mp3" }, // 15
+    { type: "audio", title: "Dancing in the kitchen", image: "assets/2026/images/day-16-dancing-delights.webp", alt: "The bear dancing in big yellow headphones next to a speaker", src: "assets/2026/audio/day-16-dancing-delights.mp3" }, // 16
+    { type: "audio", title: "The reading fort", image: "assets/2026/images/day-17-the-reading-fort.webp", alt: "The bear reading a red book in a cozy blanket fort under string lights, with a lantern beside him", src: "assets/2026/audio/day-17-the-reading-fort.mp3" }, // 17
+    { type: "audio", title: "The tram surprise", image: "assets/2026/images/day-18-the-tram-surprise.webp", alt: "The bear in a Santa hat lifting a wrapped green present into the open door of a yellow tram", src: "assets/2026/audio/day-18-the-tram-surprise.mp3" }, // 18
+    { type: "audio", title: "The Gingerbread King", image: "assets/2026/images/day-19-the-gingerbread-king.webp", alt: "The bear wearing a golden crown, admiring a gingerbread Brandenburg Gate", src: "assets/2026/audio/day-19-the-gingerbread-king.mp3" }, // 19
+    { type: "audio", title: "The snow angel", image: "assets/2026/images/day-20-the-snow-angel.webp", alt: "The bear lying in the snow, making a snow angel", src: "assets/2026/audio/day-20-the-snow-angel.mp3" }, // 20
+    { type: "audio", title: "The lost list", image: "assets/2026/images/day-21-the-lost-list.webp", alt: "The bear carrying a shopping bag with a baguette and an armful of evergreen branches", src: "assets/2026/audio/day-21-the-lost-list.mp3" }, // 21
+    { type: "audio", title: "The accordion on the corner", image: "assets/2026/images/day-22-the-accordion-on-the-corner.webp", alt: "The bear in a Santa hat playing a red accordion", src: "assets/2026/audio/day-22-the-accordion-on-the-corner.mp3" }, // 22
+    { type: "audio", title: "The cargo bike express", image: "assets/2026/images/day-23-the-cargo-bike-express.webp", alt: "The bear riding a cargo bike loaded with wrapped presents", src: "assets/2026/audio/day-23-the-cargo-bike-express.mp3" }, // 23
+    { type: "audio", title: "The star on top", image: "assets/2026/images/day-24-the-star-on-top.webp", alt: "The bear standing on a wooden crate, placing a golden star on top of a candlelit Christmas tree", src: "assets/2026/audio/day-24-the-star-on-top.mp3" }, // 24
   ];
 
   // ----- Locked message -----

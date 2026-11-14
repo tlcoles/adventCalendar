@@ -8,7 +8,7 @@ This repository is a fork of [HenniePenny/adventCalendar2025](https://github.com
 
 ## Audio surprises (2026)
 
-A door can contain a local audio recording, optionally with an illustration shown above the player and on the opened door (with a small ♫ badge). The player appears inside the existing surprise popup, uses the browser's native controls (including on phones), and **never autoplays**. Visitors press Play themselves; they can pause and seek using the controls. Playback stops and resets when the popup closes or another surprise is shown. Audio surprises do not trigger the optional Santa laugh.
+A door can contain a local audio recording, optionally with an illustration shown above the player and on the opened door (with a small ♫ badge). The player appears inside the existing surprise popup, uses the browser's native controls (including on phones), and **never autoplays**. Visitors press Play themselves; they can pause and seek using the controls. Playback stops and resets when the popup closes or another surprise is shown. If the visitor has enabled the optional Santa laugh, it plays once when a door is first opened and stops as soon as the story starts.
 
 Add a recording (and optional image) under `assets/` and replace the chosen day's entry in the `surprises` array in `script.js` with, for example:
 

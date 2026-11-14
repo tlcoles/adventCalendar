@@ -153,10 +153,6 @@ document.addEventListener("DOMContentLoaded", () => {
           modalBody.textContent = "Audio unavailable.";
           break;
         }
-        if (hohoho && !hohoho.paused) {
-          hohoho.pause();
-          hohoho.currentTime = 0;
-        }
         const audioWrap = document.createElement("div");
         audioWrap.className = "modal-audio";
         // Optional illustration shown above the player.
@@ -182,6 +178,14 @@ document.addEventListener("DOMContentLoaded", () => {
         player.preload = "metadata";
         player.src = s.src;
         player.setAttribute("aria-label", s.title || "Audio surprise");
+        // The optional Santa laugh may still be playing from opening the door.
+        // Stop it as soon as the visitor starts the story, so the two never overlap.
+        player.addEventListener("play", () => {
+          if (hohoho && !hohoho.paused) {
+            hohoho.pause();
+            hohoho.currentTime = 0;
+          }
+        });
         player.addEventListener("error", () => {
           // Avoid inserting duplicate warnings if the browser reports more than once.
           if (!audioWrap.querySelector(".audio-error")) {
@@ -413,7 +417,7 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem(openedDoorsKey, JSON.stringify(openedDoorsScoped));
         door.dataset.opened = "true";
 
-        if (surprise.type !== "youtube" && surprise.type !== "audio" && isSoundOn && hohoho) {
+        if (surprise.type !== "youtube" && isSoundOn && hohoho) {
           hohoho.currentTime = 0;
           hohoho.play().catch((err) => console.log("Audio playback failed:", err));
         }

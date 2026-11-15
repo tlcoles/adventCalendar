@@ -5,22 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Enjoy an interactive festive advent calendar with daily December delights!">
-    <title>Happy Advent, friends!</title>
+    <title>Happy Advent, friend!</title>
     <!-- Favicon: SVG for modern browsers, ICO fallback, PNG for iOS home screens -->
     <link rel="icon" href="assets/favicon/favicon.ico" sizes="32x32">
     <link rel="icon" href="assets/favicon/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
     <!-- Link preview (WhatsApp, Signal, social media) -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Happy Advent, friends!">
+    <meta property="og:url" content="https://tlcoles.com/">
+    <meta property="og:site_name" content="Happy Berlin Bear Advent calendar">
+    <meta property="og:title" content="Happy Advent, friend!">
     <meta property="og:description" content="24 doors, 24 Happy Berlin Bear stories. Open a new one every day in December.">
-    <meta property="og:image" content="https://www.tlcoles.com/assets/2026/images/bear-and-friends-share.jpg">
+    <meta property="og:image" content="https://tlcoles.com/assets/2026/images/bear-and-friends-share.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="800">
     <meta property="og:image:alt" content="Happy Berlin Bear and friends in a snowy Berlin courtyard">
     <meta name="twitter:card" content="summary_large_image">
     <!-- Link to the external CSS file with "Henny Penny" Google Font -->
-    <link rel="stylesheet" href="styles.css?v=2026b">
+    <link rel="stylesheet" href="styles.css?v=2026c">
+    <!-- 2026 theme: colors of the Happy Berlin Bear print card -->
+    <link rel="stylesheet" href="theme-2026.css?v=6">
 
     <!-- Link to the external JavaScript files -->
     <script src="script.js?v=2026c" defer></script>
@@ -32,7 +36,11 @@
     <canvas id="snowCanvas"></canvas>
   
     <!-- Main heading for the page -->
-    <h1>Merry Christmas!</h1>
+    <h1>Happy Advent, friend!</h1>
+    <p class="card-lines">
+      <span>Behind every door a little story for you</span>
+      <span>with our Happy Berlin Bear and his friends.</span>
+    </p>
   
     <!-- Calendar container where doors will be dynamically generated -->
     <div id="calendar" class="calendar"></div>

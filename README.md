@@ -4,17 +4,33 @@ This is the 2026 edition of an online Advent calendar originally created collabo
 
 This repository is a fork of [HenniePenny/adventCalendar2025](https://github.com/HenniePenny/adventCalendar2025). It preserves the original project's history and credits while allowing the 2026 edition to be developed independently. The 2026 stories, recordings, and changes are by Tammi L. Coles; the 2025 calendar they build on is the joint work of both creators.
 
-The 2026 edition runs at [tlcoles.com](https://www.tlcoles.com/). The 2025 documentation further down remains as a reference.
+The 2026 edition runs at [tlcoles.com](https://tlcoles.com/). The 2025 documentation further down remains as a reference.
+
+![The 2026 edition in November: "Happy Advent, friend!" in cream lettering above 24 closed doors in the colors of the printed card, on a night-blue sky with stars and falling snow](assets/2026/screenshot-2026.jpg)
 
 ## What is new in 2026
 
+- **Print card look.** The page matches the colors of the printed Happy Berlin Bear card: a night-blue sky with stars and white falling snow, each door in its own card color with a drawn snow drift, and the heading "Happy Advent, friend!" with the card's two lines below it. The heading is in the singular, because each visit has one viewer.
 - **Happy Berlin Bear stories.** All 24 doors hold a read-aloud story: an illustration plus a recording by Tammi L. Coles. The 2025 images and videos remain in `assets/surprises/` and in the git history.
 - **Audio doors.** A new `audio` surprise type with an optional illustration (details below).
 - **Santa laugh kept.** The optional "Ho Ho Ho" sound still plays once when a door is first opened, and stops as soon as the visitor starts the story.
 - **"Our Happy Berlin Bear & his friends."** An optional section below the calendar introduces the recurring characters with a group picture and one line each.
 - **Link preview.** Open Graph tags show the cast picture when the calendar link is shared in WhatsApp, Signal, or social media.
+- **Phone layout.** Phones narrower than 480 px get a grid of 4 × 6 doors, so the doors no longer overlap or make the page scroll sideways. This fix came from the original repository ([HenniePenny#80](https://github.com/HenniePenny/adventCalendar2025/pull/80)).
+- **Favicon.** A calendar door with "24" in the browser tab and on phone home screens.
 - **Credits.** The footer separates the 2026 edition from the original 2025 calendar.
-- **Version tags.** `index.html` loads `styles.css` and `script.js` with a `?v=` tag, so returning visitors get the current files and not cached copies.
+- **Version tags.** `index.html` loads `styles.css`, `theme-2026.css`, and `script.js` with a `?v=` tag, so returning visitors get the current files and not cached copies.
+
+## Theme
+
+The 2026 look lives in its own stylesheet, `theme-2026.css`, which `index.html` loads after `styles.css`. The shared `styles.css` stays as it is in the original calendar, which keeps future pull requests to the original repository simple.
+
+- The card colors are defined as variables at the top of `theme-2026.css`.
+- Each door gets its color through the `--door-bg`, `--door-ink`, and `--door-opened-bg` settings that `styles.css` provides.
+- Closed doors carry a drawn snow drift in three alternating shapes; opened doors lose it, so the illustration shows in full.
+- Door sizes and the grid come from `styles.css` unchanged.
+
+To return to the 2025 look, remove the `theme-2026.css` line from `index.html`.
 
 ## Audio surprises
 
@@ -75,10 +91,10 @@ The Reset button clears the opened doors and the door order.
 
 ## Deploying
 
-The calendar is a static site: upload `index.html`, `styles.css`, `script.js`, `snowEffect.js`, and the `assets/` folder to the web root. Before deploying:
+The calendar is a static site: upload `index.html`, `styles.css`, `theme-2026.css`, `script.js`, `snowEffect.js`, and the `assets/` folder to the web root. Before deploying:
 
 1. Make sure `FORCE_TESTING_MODE` is `false` in `script.js`.
-2. After changing `styles.css` or `script.js`, bump the matching `?v=` tag in `index.html` (for example `?v=2026c` to `?v=2026d`).
+2. After changing `styles.css`, `theme-2026.css`, or `script.js`, bump the matching `?v=` tag in `index.html` (for example `?v=2026c` to `?v=2026d`).
 3. After uploading, do a hard refresh (Cmd+Shift+R or Ctrl+Shift+R) to see the changes.
 
 ## Testing
@@ -96,13 +112,19 @@ Doors stay locked until their December date, so the live calendar cannot be test
 
 Check on Safari for iPhone, Chrome for Android, and a desktop browser: Play, Pause, seeking, closing the popup, switching doors, reopening the same door, the Santa laugh with the sound on, and the cast toggle.
 
+## Acknowledgements for 2026
+
+The acknowledgements for the 2025 calendar further down still apply, including the help the original creators had from ChatGPT.
+
+> 🪄 _For the 2026 edition, special thanks to all the coders whose work seeds the large language model behind Claude (Anthropic). Tammi used Claude for technical guidance and hands-on help with preparing the recordings and illustrations for the web, the cast section and link preview, the Santa laugh on audio doors, the favicon, the print card theme, testing on phone and desktop sizes, and this documentation._
+
 ---
 
 # 🎄 Advent Calendar 2025
 
 > _A cozy, customizable digital advent calendar — perfect for any December, every year._
 
-![Screenshot of the Advent Calendar](assets/screenshot-placeholder.jpg)
+![Screenshot of the 2025 Advent calendar](assets/screenshot-placeholder.jpg)
 
 Ho ho ho! Welcome to **Advent Calendar 2025**, a joyful little web project that lets you create your _own_ online advent calendar.
 

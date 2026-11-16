@@ -6,11 +6,11 @@ This repository is a fork of [HenniePenny/adventCalendar2025](https://github.com
 
 The 2026 edition runs at [tlcoles.com](https://tlcoles.com/). The 2025 documentation further down remains as a reference.
 
-![The 2026 edition in November: "Happy Advent, friend!" in cream lettering above 24 closed doors in the colors of the printed card, on a night-blue sky with stars and falling snow](assets/2026/screenshot-2026.jpg)
+![The 2026 edition in November: "Happy Advent, friend!" in cream lettering above 24 closed doors in many colors, on a night-blue sky with stars and falling snow](assets/2026/screenshot-2026.jpg)
 
 ## What is new in 2026
 
-- **Print card look.** The page matches the colors of the printed Happy Berlin Bear card: a night-blue sky with stars and white falling snow, each door in its own card color with a drawn snow drift, and the heading "Happy Advent, friend!" with the card's two lines below it. The heading is in the singular, because each visit has one viewer.
+- **New look.** A night-blue sky with stars and white falling snow, each door in its own color with a drawn snow drift, and the heading "Happy Advent, friend!" with two lines of introduction below it. The heading is in the singular, because each visit has one viewer.
 - **Happy Berlin Bear stories.** All 24 doors hold a read-aloud story: an illustration plus a recording by Tammi L. Coles. The 2025 images and videos remain in `assets/surprises/` and in the git history.
 - **Audio doors.** A new `audio` surprise type with an optional illustration (details below).
 - **Santa laugh kept.** The optional "Ho Ho Ho" sound still plays once when a door is first opened, and stops as soon as the visitor starts the story.
@@ -25,7 +25,7 @@ The 2026 edition runs at [tlcoles.com](https://tlcoles.com/). The 2025 documenta
 
 The 2026 look lives in its own stylesheet, `theme-2026.css`, which `index.html` loads after `styles.css`. The shared `styles.css` stays as it is in the original calendar, which keeps future pull requests to the original repository simple.
 
-- The card colors are defined as variables at the top of `theme-2026.css`.
+- The colors are defined as variables at the top of `theme-2026.css`.
 - Each door gets its color through the `--door-bg`, `--door-ink`, and `--door-opened-bg` settings that `styles.css` provides.
 - Closed doors carry a drawn snow drift in three alternating shapes; opened doors lose it, so the illustration shows in full.
 - Door sizes and the grid come from `styles.css` unchanged.
@@ -116,7 +116,7 @@ Check on Safari for iPhone, Chrome for Android, and a desktop browser: Play, Pau
 
 The acknowledgements for the 2025 calendar further down still apply, including the help the original creators had from ChatGPT.
 
-> 🪄 _For the 2026 edition, special thanks to all the coders whose work seeds the large language model behind Claude (Anthropic). Tammi used Claude for technical guidance and hands-on help with preparing the recordings and illustrations for the web, the cast section and link preview, the Santa laugh on audio doors, the favicon, the print card theme, testing on phone and desktop sizes, and this documentation._
+> 🪄 _For the 2026 edition, special thanks to all the coders whose work seeds the large language model behind Claude (Anthropic). Tammi used Claude for technical guidance and hands-on help with preparing the recordings and illustrations for the web, the cast section and link preview, the Santa laugh on audio doors, the favicon, the 2026 theme, testing on phone and desktop sizes, and this documentation._
 
 ---
 

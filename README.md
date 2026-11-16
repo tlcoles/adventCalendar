@@ -10,7 +10,7 @@ The 2026 edition runs at [tlcoles.com](https://tlcoles.com/). The 2025 documenta
 
 ## What is new in 2026
 
-- **New look.** A night-blue sky with stars and white falling snow, each door in its own color with a drawn snow drift, and the heading "Happy Advent, friend!" with two lines of introduction below it. The heading is in the singular, because each visit has one viewer.
+- **New look.** A night-blue sky with stars and white falling snow, each door in its own color with a drawn snow drift, and the heading "Happy Advent, friend!" with two lines of introduction below it.
 - **Happy Berlin Bear stories.** All 24 doors hold a read-aloud story: an illustration plus a recording by Tammi L. Coles. The 2025 images and videos remain in `assets/surprises/` and in the git history.
 - **Audio doors.** A new `audio` surprise type with an optional illustration (details below).
 - **Santa laugh kept.** The optional "Ho Ho Ho" sound still plays once when a door is first opened, and stops as soon as the visitor starts the story.
@@ -18,12 +18,11 @@ The 2026 edition runs at [tlcoles.com](https://tlcoles.com/). The 2025 documenta
 - **Link preview.** Open Graph tags show the cast picture when the calendar link is shared in WhatsApp, Signal, or social media.
 - **Phone layout.** Phones narrower than 480 px get a grid of 4 × 6 doors, so the doors no longer overlap or make the page scroll sideways. This fix came from the original repository ([HenniePenny#80](https://github.com/HenniePenny/adventCalendar2025/pull/80)).
 - **Favicon.** A calendar door with "24" in the browser tab and on phone home screens.
-- **Credits.** The footer separates the 2026 edition from the original 2025 calendar.
 - **Version tags.** `index.html` loads `styles.css`, `theme-2026.css`, and `script.js` with a `?v=` tag, so returning visitors get the current files and not cached copies.
 
 ## Theme
 
-The 2026 look lives in its own stylesheet, `theme-2026.css`, which `index.html` loads after `styles.css`. The shared `styles.css` stays as it is in the original calendar, which keeps future pull requests to the original repository simple.
+The 2026 look lives in its own stylesheet, `theme-2026.css`, which `index.html` loads after `styles.css`. The shared `styles.css` stays as it is in the original calendar, so the theme can be changed or removed without touching it.
 
 - The colors are defined as variables at the top of `theme-2026.css`.
 - Each door gets its color through the `--door-bg`, `--door-ink`, and `--door-opened-bg` settings that `styles.css` provides.
@@ -71,10 +70,10 @@ The `<head>` of `index.html` holds Open Graph and Twitter card tags. The preview
 
 2026 files live in `assets/2026/audio/` and `assets/2026/images/`, named `day-NN-short-title`.
 
-- **Recordings:** leveled to the same loudness (about −21 LUFS, peaks below −1 dBFS) and saved as 64 kbps mono MP3, about 1 MB per story. Day 15 also has gentle compression to even out quiet and loud passages.
+- **Recordings:** leveled to the same loudness (about −21 LUFS, peaks below −1 dBFS) and saved as 64 kbps mono MP3, about 1 MB per story.
 - **Illustrations:** 900 × 900 px WebP, about 110 KB each.
 - **Cast picture:** 1200 × 800 px WebP for the page, plus the JPEG for link previews.
-- **Favicon:** `assets/favicon/` holds a calendar door with "24" in the page's red and green. `favicon.svg` is used by most browsers, `favicon.ico` (16, 32 and 48 px, with a simplified 16 px version) is the fallback, and `apple-touch-icon.png` (180 px, on the page background color) is used when someone adds the calendar to an iPhone or iPad home screen.
+- **Favicon:** `assets/favicon/` holds a calendar door with "24". `favicon.svg` is used by most browsers, `favicon.ico` (16, 32 and 48 px, with a simplified 16 px version) is the fallback, and `apple-touch-icon.png` (180 px) is used when someone adds the calendar to an iPhone or iPad home screen.
 
 ## Storage keys
 
@@ -99,7 +98,7 @@ The calendar is a static site: upload `index.html`, `styles.css`, `theme-2026.cs
 
 ## Testing
 
-Doors stay locked until their December date, so the live calendar cannot be tested in November.
+Doors stay locked until their December date, so the live calendar cannot be tested before December.
 
 - **On your own computer:** set `FORCE_TESTING_MODE = true` to unlock all doors. Turn it off before deploying, because it unlocks the doors for every visitor.
 - **On the live website**, to test on a real phone, make a temporary copy instead:

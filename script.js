@@ -355,13 +355,20 @@ document.addEventListener("DOMContentLoaded", () => {
         const badge = document.createElement("span");
         badge.className = "door-audio-badge";
         badge.setAttribute("aria-hidden", "true");
-        badge.textContent = "♫";
+        // A play symbol, since the stories are spoken, not music. The
+        // \uFE0E keeps iPhones from drawing it as a blue emoji button.
+        badge.textContent = "\u25B6\uFE0E";
+        // The badge sits on the picture's corner, not the door's,
+        // so it stays with the picture on tall doors.
+        const frame = document.createElement("span");
+        frame.className = "door-audio-frame";
+        frame.append(thumb, badge);
         doorEl.classList.add("door--audio");
-        doorEl.replaceChildren(thumb, badge);
+        doorEl.replaceChildren(frame);
       } else {
         const preview = document.createElement("div");
         preview.className = "door-audio";
-        preview.textContent = "♫ " + (s.title || "Listen to audio");
+        preview.textContent = "\u25B6\uFE0E " + (s.title || "Listen to audio");
         doorEl.replaceChildren(preview);
       }
     }

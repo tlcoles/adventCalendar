@@ -33,7 +33,7 @@ To return to the 2025 look, remove the `theme-2026.css` line from `index.html`.
 
 ## Audio surprises
 
-A door can contain a local audio recording, optionally with an illustration shown above the player and on the opened door (with a small ♫ badge). The player appears inside the existing surprise popup, uses the browser's native controls (including on phones), and **never autoplays**. Visitors press Play themselves; they can pause and seek using the controls. Playback stops and resets when the popup closes or another surprise is shown. In the popup, the illustration is capped in height so the player always stays visible, even on short laptop screens.
+A door can contain a local audio recording, optionally with an illustration shown above the player and on the opened door (with a small ▶ play badge). The player appears inside the existing surprise popup, uses the browser's native controls (including on phones), and **never autoplays**. Visitors press Play themselves; they can pause and seek using the controls. Playback stops and resets when the popup closes or another surprise is shown. In the popup, the illustration is capped in height so the player always stays visible, even on short laptop screens.
 
 To add one, put the files under `assets/` and replace the chosen day's entry in the `surprises` array in `script.js`, for example:
 

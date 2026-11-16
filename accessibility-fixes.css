@@ -67,3 +67,22 @@ button.door:focus-visible {
   overflow: hidden;
   clip-path: inset(50%);
 }
+
+/* Play badge on opened story doors: anchored to the picture's
+   corner, so it stays with the picture on the tall doors. */
+.door-audio-frame {
+  position: relative;
+  display: block;
+  max-width: 100%;
+  line-height: 0;
+}
+
+.door-audio-frame img {
+  display: block;
+}
+
+.door-audio-frame .door-audio-badge {
+  right: -0.35rem;
+  bottom: -0.35rem;
+  line-height: 1;
+}

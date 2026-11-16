@@ -13,12 +13,16 @@ button.door {
 /* Door shape: taller than wide, like a real door.
    Buttons count padding and border inside their height, so after
    the switch from divs the doors had shrunk into squat boxes.
-   A fixed 3:4 shape restores the 2025 height on phones and makes
-   desktop doors upright too. The minimum heights in styles.css
-   still apply. */
+   Phones get compact doors, just a little taller than wide, so the
+   calendar stays short on a small screen. From 480px up, the doors
+   are tall and narrow. The minimum heights in styles.css still apply. */
 .door {
   box-sizing: border-box;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 5 / 6;
+}
+
+@media (min-width: 30rem) { /* 480px, same breakpoint as styles.css */
+  .door { aspect-ratio: 2 / 3; }
 }
 
 /* An outer ring marks the selected door without shifting the layout. */

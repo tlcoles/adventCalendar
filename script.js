@@ -12,6 +12,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const dialog = modal.querySelector(".modal-dialog"); // tabindex="-1" in HTML
   const modalBody = document.getElementById("modalBody");
 
+  // ----- Language -----
+  // Visitors whose browser is set to German get German messages and labels.
+  const userLang = navigator.language || navigator.userLanguage || "";
+  const isGerman = userLang.toLowerCase().startsWith("de");
+  const closeButton = modal.querySelector(".modal-close");
+  if (isGerman && closeButton) closeButton.setAttribute("aria-label", "Schließen");
+
   // ----- Date-gating config -----
   const today = new Date();
 
@@ -392,8 +399,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ----- Locked message -----
   function getLockedMessage() {
-    const userLang = navigator.language || navigator.userLanguage;
-    const isGerman = userLang && userLang.toLowerCase().startsWith("de");
     const messages = isGerman
       ? [
           "Geduld, kleiner Wichtel! Diese Tür öffnet sich erst, wenn die Weihnachtsmagie bereit ist.",
@@ -419,24 +424,39 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ----- Custom festive popup -----
+  // Screen readers hear the message through a status region that stays
+  // on the page. A region added at the same moment as its text is often
+  // missed, so the text arrives a moment after the region is cleared.
+  const lockedAnnouncer = document.createElement("div");
+  lockedAnnouncer.className = "sr-only";
+  lockedAnnouncer.setAttribute("role", "status");
+  document.body.appendChild(lockedAnnouncer);
+  let popupTimer;
+
   function showLockedPopup(message) {
     // Remove any existing *temporary* locked popup,
     // but keep the reset dialog (which also uses locked-popup styles)
     const existing = document.querySelector(".locked-popup:not(.reset-confirm)");
     if (existing) existing.remove();
+    window.clearTimeout(popupTimer);
 
-    // Create popup container
+    // Create popup container. It is hidden from screen readers,
+    // which get the same message from the status region instead.
     const popup = document.createElement("div");
     popup.className = "locked-popup";
+    popup.setAttribute("aria-hidden", "true");
     popup.textContent = message;
     document.body.appendChild(popup);
+
+    lockedAnnouncer.textContent = "";
+    window.setTimeout(() => { lockedAnnouncer.textContent = message; }, 100);
 
     // Animate in
     requestAnimationFrame(() => popup.classList.add("visible"));
 
-    // Close on click or after 3.5 seconds
+    // Close on click or after 6 seconds, long enough to read the longer messages
     popup.addEventListener("click", () => popup.remove());
-    setTimeout(() => popup.remove(), 3500);
+    popupTimer = window.setTimeout(() => popup.remove(), 6000);
   }
 
   // ----- Sound -----
@@ -507,10 +527,14 @@ document.addEventListener("DOMContentLoaded", () => {
       delete door.dataset.opened;
     }
     door.classList.toggle('opened', opened);
-    const label = opened
-      ? `December ${day}: ${surprises[day - 1].title}. Listen to the story.`
-      : allowed ? `December ${day}. Open this surprise.`
-      : `December ${day}. Locked. Available in December from day ${day}.`;
+    const title = surprises[day - 1].title;
+    const label = isGerman
+      ? (opened ? `Tür ${day}: ${title}. Geschichte anhören.`
+        : allowed ? `Tür ${day}. Überraschung öffnen.`
+        : `Tür ${day}, noch verschlossen. Öffnet sich am ${day}. Dezember.`)
+      : (opened ? `Door ${day}: ${title}. Listen to the story.`
+        : allowed ? `Door ${day}. Open the surprise.`
+        : `Door ${day}, locked. Opens on December ${day}.`);
     door.setAttribute('aria-label', label);
   }
   function refreshDoorAvailability() {
@@ -593,16 +617,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const resetNo = document.getElementById("resetConfirmNo");
 
   let lastFocusedElement = null;
+  let resetInertBackground = [];
 
   function openResetDialog() {
     if (!resetDialog) return;
 
     // Remember where focus was
     lastFocusedElement = document.activeElement;
-
-    // Detect language
-    const userLang = navigator.language || navigator.userLanguage;
-    const isGerman = userLang && userLang.toLowerCase().startsWith("de");
 
     // Your custom message:
     const message = isGerman
@@ -618,13 +639,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const titleEl = document.getElementById("resetConfirmTitle");
     if (titleEl) titleEl.textContent = title;
     resetMsg.textContent = message;
+    resetYes.textContent = isGerman ? "🎁 Zurücksetzen" : "🎁 Reset";
+    resetNo.textContent = isGerman ? "Abbrechen" : "Cancel";
 
     // Show dialog
     resetDialog.classList.add("visible");
     resetDialog.setAttribute("aria-hidden", "false");
 
-    // Move focus into the dialog — default button = "Yes"
-    if (resetYes) resetYes.focus();
+    // Like the story window: keyboard and screen readers stay in the
+    // dialog until it closes. Restore each element's previous state later.
+    resetInertBackground = Array.from(document.body.children)
+      .filter((el) => el !== resetDialog)
+      .map((el) => ({ el, wasInert: el.hasAttribute("inert") }));
+    resetInertBackground.forEach(({ el }) => el.setAttribute("inert", ""));
+
+    // Start on Cancel, so a stray Enter cannot clear anyone's progress
+    resetNo.focus();
 
     // Enable ESC + focus trap
     document.addEventListener("keydown", handleResetKeydown);
@@ -637,6 +667,11 @@ document.addEventListener("DOMContentLoaded", () => {
     resetDialog.setAttribute("aria-hidden", "true");
 
     document.removeEventListener("keydown", handleResetKeydown);
+
+    resetInertBackground.forEach(({ el, wasInert }) => {
+      if (!wasInert) el.removeAttribute("inert");
+    });
+    resetInertBackground = [];
 
     // Restore focus to the button that opened it
     if (lastFocusedElement && typeof lastFocusedElement.focus === "function") {

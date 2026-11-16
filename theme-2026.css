@@ -122,8 +122,13 @@ h1 {
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
 }
 
-/* Bigger numbers on desktop, closer to the printed card.
-   Font size only: the doors keep their size. */
+/* Bigger numbers, closer to the printed card, at every width.
+   Font size only: the doors keep their size.
+   Phones scale with the screen, so two-digit numbers still fit
+   the narrower doors on small phones (about 22px at 320px wide,
+   27px on a 390px iPhone). */
+.door { font-size: clamp(1.4rem, 7vw, 1.75rem); }
+@media (min-width: 30rem) { .door { font-size: 2rem; } }
 @media (min-width: 48rem) { .door { font-size: 2.3rem; } }
 @media (min-width: 64rem) { .door { font-size: 2.6rem; } }
 @media (min-width: 80rem) { .door { font-size: 3rem; } }

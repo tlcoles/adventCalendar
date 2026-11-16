@@ -122,16 +122,21 @@ h1 {
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
 }
 
-/* Door shape: taller than wide, like a real door. Phones get
-   compact doors, just a little taller than wide, so the calendar
-   stays short on a small screen. From 480px up, the doors are tall
-   and narrow. The minimum heights in styles.css still apply. */
+/* Door shape: taller than wide, like a real door.
+   - Phones: compact, just a little taller than wide, so the
+     calendar stays short on a small screen
+   - 480 to 1023px (tablets held upright): tall and narrow
+   - From 1024px: only slightly taller than wide, so all 24 doors
+     fit on a 1920 x 1080 monitor without scrolling, even with a
+     bookmarks bar (the last row ends at about 910px)
+   The minimum heights in styles.css still apply. */
 .door {
   box-sizing: border-box;
   aspect-ratio: 5 / 6;
 }
 
 @media (min-width: 30rem) { .door { aspect-ratio: 2 / 3; } }
+@media (min-width: 64rem) { .door { aspect-ratio: 9 / 10; } }
 
 /* Bigger numbers, closer to the printed card, at every width.
    Font size only: the doors keep their size.

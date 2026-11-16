@@ -122,6 +122,17 @@ h1 {
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
 }
 
+/* Door shape: taller than wide, like a real door. Phones get
+   compact doors, just a little taller than wide, so the calendar
+   stays short on a small screen. From 480px up, the doors are tall
+   and narrow. The minimum heights in styles.css still apply. */
+.door {
+  box-sizing: border-box;
+  aspect-ratio: 5 / 6;
+}
+
+@media (min-width: 30rem) { .door { aspect-ratio: 2 / 3; } }
+
 /* Bigger numbers, closer to the printed card, at every width.
    Font size only: the doors keep their size.
    Phones scale with the screen, so two-digit numbers still fit

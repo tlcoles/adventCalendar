@@ -1,0 +1,41 @@
+/* Keep the existing door design when changing divs to native buttons.
+   CSS declarations use the same font, sizing, and flex layout as before. */
+button.door {
+  font-family: inherit;
+  line-height: inherit;
+  text-align: center;
+  letter-spacing: normal;
+  text-transform: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* An outer ring marks the selected door without shifting the layout. */
+button.door:focus-visible {
+  outline: 3px solid #fff4cd;
+  outline-offset: 5px;
+}
+.modal-close:focus-visible,
+.modal-audio audio:focus-visible {
+  outline: 3px solid #286e4a;
+  outline-offset: 3px;
+}
+
+/* Honour reduced motion for door effects as well as the existing snow. */
+@media (prefers-reduced-motion: reduce) {
+  .door,
+  .door:hover,
+  body.touch-device .door.opened {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Visually hidden boundary controls do not affect dialog layout. */
+[data-focus-guard] {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
